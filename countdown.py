@@ -49,15 +49,23 @@ def possible_words(word_list, letter_list):
             valid_words.append(word)
     return valid_words
 
-def counter(manual=True):
+def counter(manual=False, count=30):
     '''counts down from 30. If manual set to false, countdown begins automatically. '''
     if manual:
         start = input('Press any key to start the countdown. ')
-    count = 30
-    for i in range(30):
+    for i in range(count):
         print(count,', ', end='')
         count -= 1
-        time.sleep(1)    
+        time.sleep(1)
+        
+def format_letters(letter_list):
+    print(f'''
+          
+          .----------------------------.
+          | {', '.join(letter_list)}  |
+          |____________________________|
+          
+          ''')
 
 def show_results(valid_words, detailed=True):
     '''Takes a list of all valid words, displays the longest one/s along with letter count
@@ -136,6 +144,7 @@ def main():
         choice = check_menu_input(4)
         if choice == '1':
             letter_list = get_letters(vowels, consonants)
+            format_letters(letter_list)            
             valid_words = possible_words(word_list, letter_list)
             counter()
             contestant_word = input('\nEnter your word: ')
@@ -149,7 +158,7 @@ def main():
             word = random.choice(conundrum_list)
             scrambled = scrambler(word)
             print('The Conundrum word is: ',scrambled)
-            counter(manual=False)
+            counter()
             guess = input('\nSolve the conundrum: ')
             if guess == word:
                 print(f'congratulations! the word is {word}.')
@@ -168,6 +177,7 @@ def main():
                     player = player_2
                 print(f'Round {rounds}: {player} chooses the letters.')
                 letter_list = get_letters(vowels, consonants)
+                format_letters(letter_list)
                 valid_words = possible_words(word_list, letter_list)
                 counter()
                 player_1_word = input(f'\n{player_1}, enter your word:\n')
